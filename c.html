@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radionuclide Converter</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>Radionuclide Converter</h1>
+    <form id="converter">
+        <label for="radionuclide">Choose Radionuclide:</label>
+        <select id="radionuclide">
+            <option value="226Ra">226Ra</option>
+            <option value="222Rn">222Rn</option>
+            <option value="60Co">60Co</option>
+            <option value="137Cs">137Cs</option>
+            <option value="192Ir">192Ir</option>
+            <option value="198Au">198Au</option>
+            <option value="125I">125I</option>
+            <option value="103Pd">103Pd</option>
+        </select><br>
+
+        <label for="mCi">Activity in mCi:</label>
+        <input type="text" id="mCi"><br>
+
+        <button type="button" id="convertButton">Convert</button>
+    </form>
+
+    <div id="outputMgRaEq"></div>
+    <div id="outputBq"></div>
+
+    <div>
+        <h2>Calculation Process:</h2>
+        <div id="calculationProcessMgRaEq"></div>
+        <div id="calculationProcessBq"></div>
+    </div>
+
+    <script>
+        const exposureRateConstants = {
+            "226Ra": 8.25,
+            "222Rn": 10.15,
+            "60Co": 13.07,
+            "137Cs": 3.26,
+            "192Ir": 4.69,
+            "198Au": 2.38,
+            "125I": 1.46,
+            "103Pd": 1.48
+        };
+
+        document.getElementById('convertButton').addEventListener('click', function() {
+            const radionuclide = document.getElementById('radionuclide').value;
+            const mCi = parseFloat(document.getElementById('mCi').value);
+
+            // Convert from mCi to mg-RaEq
+            const exposureRateConstant = exposureRateConstants[radionuclide];
+            const mgRaEq = mCi * (exposureRateConstant / 8.25);
+
+            // Convert from mg-RaEq to Bq
+            const bq = mgRaEq * 37 * 10e6;
+
+            document.getElementById('outputMgRaEq').textContent = `Activity in mg-RaEq: ${mgRaEq}`;
+            document.getElementById('outputBq').textContent = `Activity in Bq: ${bq}`;
+
+            // Visualize the calculation process for mg-RaEq
+            const calculationProcessMgRaEq = `\\[${mCi} \\text{ mCi} \\times \\frac{${exposureRateConstant} \\text{ } \\frac{\\text{R} \\cdot \\text{cm}^2}{\\text{mCi} \\cdot \\text{h}}}{8.25 \\text{ } \\frac{\\text{R} \\cdot \\text{cm}^2}{\\text{mg} \\cdot \\text{h}}} = ${mgRaEq} \\text{ mg-RaEq}\\]`;
+            document.getElementById('calculationProcessMgRaEq').textContent = calculationProcessMgRaEq;
+
+            // Visualize the calculation process for Bq
+            const calculationProcessBq = `\\[${mgRaEq} \\text{ mg-RaEq} \\times 37 \\times 10^6 \\text{ } \\frac{\\text{Bq}}{\\text{mg-RaEq}} = ${bq} \\text{ Bq}\\]`;
+            document.getElementById('calculationProcessBq').textContent = calculationProcessBq;
+
+            MathJax.typeset();
+        });
+    </script>
+</body>
+</html>
