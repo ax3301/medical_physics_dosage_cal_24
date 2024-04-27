@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TG51 Calculator Form</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>TG51 Protocol Calculator</h1>
+    <style>
+        #tg51Calculator {
+            font-size: 16px; /* Larger font size */
+            line-height: 2; /* More space between lines */
+            width: 100%; /* Full width */
+        }
+        #tg51Calculator input[type="text"] {
+            width: 300px; /* Wider input fields */
+            padding: 5px; /* Padding inside input fields */
+            margin-bottom: 10px; /* Space below each input field */
+        }
+        #tg51Calculator label {
+            display: block; /* Make labels block elements */
+            margin-top: 10px; /* Space above each label */
+        }
+    </style>
+    <form id="tg51Calculator">
+        <label for="ndwCo60">N_d,w(Co-60):</label>
+        <input type="text" id="ndwCo60"><br>
+
+        <label for="kQ">kQ:</label>
+        <input type="text" id="kQ"><br>
+
+        <label for="mRaw">M_raw:</label>
+        <input type="text" id="mRaw"><br>
+
+        <label for="pion">P_ion:</label>
+        <input type="text" id="pion"><br>
+
+        <label for="pPol">P_pol:</label>
+        <input type="text" id="pPol"><br>
+
+        <label for="pTp">p_tp:</label>
+        <input type="text" id="pTp"><br>
+
+        <label for="pElec">p_elec:</label>
+        <input type="text" id="pElec"><br>
+
+        <label for="pLeak">P_leak:</label>
+        <input type="text" id="pLeak"><br>
+
+        <label for="pRp">p_rp:</label>
+        <input type="text" id="pRp"><br>
+
+        <button type="button" id="calculateButton">Calculate</button>
+    </form>
+
+    <div id="calculationOutput"></div>
+
+    <div>
+        <p>The equation is:</p>
+        <div id="equation">\[ D_{w,Q} = N_{d,w(Co-60)} \cdot kQ \cdot M_{raw} \cdot P_{ion} \cdot P_{pol} \cdot p_{tp} \cdot p_{elec} \cdot P_{leak} \cdot p_{rp} \]</div>
+    </div>
+
+    <div>
+        <p>The equation with input numbers is:</p>
+        <div id="equationWithNumbers"></div>
+    </div>
+
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', function() {
+            const ndwCo60 = parseFloat(document.getElementById('ndwCo60').value);
+            const kQ = parseFloat(document.getElementById('kQ').value);
+            const mRaw = parseFloat(document.getElementById('mRaw').value);
+            const pion = parseFloat(document.getElementById('pion').value);
+            const pPol = parseFloat(document.getElementById('pPol').value);
+            const pTp = parseFloat(document.getElementById('pTp').value);
+            const pElec = parseFloat(document.getElementById('pElec').value);
+            const pLeak = parseFloat(document.getElementById('pLeak').value);
+            const pRp = parseFloat(document.getElementById('pRp').value);
+
+            // Perform the calculation
+            const result = ndwCo60 * kQ * mRaw * pion * pPol * pTp * pElec * pLeak * pRp;
+
+            document.getElementById('calculationOutput').textContent = `Result: ${result}`;
+
+            const equationWithNumbers = `\\[ D_{w,Q} = ${ndwCo60} \\cdot ${kQ} \\cdot ${mRaw} \\cdot ${pion} \\cdot ${pPol} \\cdot ${pTp} \\cdot ${pElec} \\cdot ${pLeak} \\cdot ${pRp} \\]`;
+            document.getElementById('equationWithNumbers').textContent = equationWithNumbers;
+
+            MathJax.typeset();
+        });
+    </script>
+</body>
+</html>
