@@ -5,9 +5,20 @@
     <title>Radionuclide Converter</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <h1>Radionuclide - Radium Equivalent Msss Converter</h1>
+    <h1>Radionuclide Converter</h1>
     <form id="converter">
         <label for="radionuclide">Choose Radionuclide:</label>
         <select id="radionuclide">
@@ -34,6 +45,48 @@
         <h2>Calculation Process:</h2>
         <div id="calculationProcessMgRaEq"></div>
         <div id="calculationProcessBq"></div>
+    </div>
+
+    <div>
+        <h2>Conversion Unit Table:</h2>
+        <table>
+            <tr>
+                <th>Radionuclide</th>
+                <th>Exposure Rate Constant (Rcm^2/mCi-h)</th>
+            </tr>
+            <tr>
+                <td>226Ra</td>
+                <td>8.25</td>
+            </tr>
+            <tr>
+                <td>222Rn</td>
+                <td>10.15</td>
+            </tr>
+            <tr>
+                <td>60Co</td>
+                <td>13.07</td>
+            </tr>
+            <tr>
+                <td>137Cs</td>
+                <td>3.26</td>
+            </tr>
+            <tr>
+                <td>192Ir</td>
+                <td>4.69</td>
+            </tr>
+            <tr>
+                <td>198Au</td>
+                <td>2.38</td>
+            </tr>
+            <tr>
+                <td>125I</td>
+                <td>1.46</td>
+            </tr>
+            <tr>
+                <td>103Pd</td>
+                <td>1.48</td>
+            </tr>
+        </table>
     </div>
 
     <script>
@@ -63,7 +116,7 @@
             const mgRaEq = mCi * (exposureRateConstant / 8.25);
 
             // Convert from mg-RaEq to Bq
-            const bq = mgRaEq * 37 * 1e6;
+            const bq = mgRaEq * 37 * 10e6;
 
             // Format Bq in scientific notation
             const bqScientific = formatScientific(bq);
